@@ -39,10 +39,10 @@
                         @if (!User.Identity.IsAuthenticated)
                         {
                             <li class="nav-item">
-                                <a class="nav-link" asp-page="./Auth/Login">Login</a>
+                                <a class="nav-link" asp-page="/Auth/Login">Login</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" asp-page="./Auth/Register">Register</a>
+                                <a class="nav-link" asp-page="/Auth/Register">Register</a>
                             </li>
                         }
                         else
@@ -50,7 +50,7 @@
                             if (User.IsInRole("Admin"))
                             {
                                 <li class="nav-item">
-                                    <a class="nav-link" asp-page="./Dashboard/UnapprovedEvents">Dashboard</a>
+                                    <a class="nav-link" asp-page="/Dashboard/UnapprovedEvents">Dashboard</a>
                                 </li>
                                 <li class="nav-item dropdown">
                                     <a class="nav-link dropdown-toggle"
@@ -63,10 +63,10 @@
                                     </a>
                                     <ul class="dropdown-menu" aria-labelledby="categories">
                                         <li>
-                                            <a class="dropdown-item" asp-page="./Dashboard/Categories/Index">Index</a>
+                                            <a class="dropdown-item" asp-page="/Dashboard/Categories/Index">Index</a>
                                         </li>
                                         <li>
-                                            <a class="dropdown-item" asp-page="./Dashboard/Categories/Create">Create</a>
+                                            <a class="dropdown-item" asp-page="/Dashboard/Categories/Create">Create</a>
                                         </li>
                                     </ul>
                                 </li>
@@ -81,10 +81,10 @@
                                     </a>
                                     <ul class="dropdown-menu" aria-labelledby="cities">
                                         <li>
-                                            <a class="dropdown-item" asp-page="./Dashboard/Cities/Index">Index</a>
+                                            <a class="dropdown-item" asp-page="/Dashboard/Cities/Index">Index</a>
                                         </li>
                                         <li>
-                                            <a class="dropdown-item" asp-page="./Dashboard/Cities/Create">Create</a>
+                                            <a class="dropdown-item" asp-page="/Dashboard/Cities/Create">Create</a>
                                         </li>
                                     </ul>
                                 </li>
@@ -102,13 +102,13 @@
                                     </a>
                                     <ul class="dropdown-menu" aria-labelledby="events">
                                         <li>
-                                            <a class="dropdown-item" asp-page="./Events/Index">Index</a>
+                                            <a class="dropdown-item" asp-page="/Events/Index">Index</a>
                                         </li>
                                         <li>
-                                            <a class="dropdown-item" asp-page="./Events/CreateEvent">Create Event</a>
+                                            <a class="dropdown-item" asp-page="/Events/CreateEvent">Create Event</a>
                                         </li>
                                         <li>
-                                            <a class="dropdown-item" asp-page="./Events/CreateTicketEvent">Create Ticket Event</a>
+                                            <a class="dropdown-item" asp-page="/Events/CreateTicketEvent">Create Ticket Event</a>
                                         </li>
                                     </ul>
                                 </li>
@@ -123,23 +123,23 @@
                                     </a>
                                     <ul class="dropdown-menu" aria-labelledby="profile">
                                         <li>
-                                            <a class="dropdown-item" asp-page="./Profile/MyOrganizations">My Organizations</a>
+                                            <a class="dropdown-item" asp-page="/Profile/MyOrganizations">My Organizations</a>
                                         </li>
                                         <li>
-                                            <a class="dropdown-item" asp-page="./Profile/UpcomingEvents">Upcoming Events</a>
+                                            <a class="dropdown-item" asp-page="/Profile/UpcomingEvents">Upcoming Events</a>
                                         </li>
                                         <li>
-                                            <a class="dropdown-item" asp-page="./Profile/ParticipedEvents">Participed Events</a>
+                                            <a class="dropdown-item" asp-page="/Profile/ParticipedEvents">Participed Events</a>
                                         </li>
                                         <li>
-                                            <a class="dropdown-item" asp-page="./Profile/ChangePassword">Change Password</a>
+                                            <a class="dropdown-item" asp-page="/Profile/ChangePassword">Change Password</a>
                                         </li>
                                     </ul>
                                 </li>
                             }
                             
                             <li class="nav-item">
-                                <a class="nav-link" asp-page="./Auth/Logout">Logout</a>
+                                <a class="nav-link" asp-page="/Auth/Logout">Logout</a>
                             </li>
                         }
                     </ul>

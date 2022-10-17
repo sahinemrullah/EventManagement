@@ -1,3 +1,5 @@
+using EventManagement.WebRazorPages.Pages.Shared;
+using EventManagement.WebRazorPages.ServiceConfigurations;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
@@ -6,9 +8,14 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 namespace EventManagement.WebRazorPages.Pages.Events
 {
     [Authorize(Roles = "User")]
-    public class IndexModel : PageModel
+    public class IndexModel : APIClientPageModelBase
     {
         private readonly int[] pageSizes = { 1, 5, 10, 25 };
+
+        public IndexModel(IHttpClientFactory httpClientFactory, IUserAccessor userAccessor) : base(httpClientFactory, userAccessor)
+        {
+        }
+
         public SelectList PageSizes => new(pageSizes, PageSize);
         public int PageNumber { get; set; }
         public int PageSize { get; set; }
@@ -26,6 +33,16 @@ namespace EventManagement.WebRazorPages.Pages.Events
         public IActionResult OnPost()
         {
             return Page();
+        }
+
+        public async Task<IActionResult> OnPostApplyAsync([FromForm] int id)
+        {
+            return await PostAsync($"api/events/apply/{id}", string.Empty, OnPostApplyAsyncHandler);
+        }
+
+        private async Task<IActionResult> OnPostApplyAsyncHandler(HttpContent httpContent)
+        {
+            return RedirectToPage("./Index");
         }
     }
 }

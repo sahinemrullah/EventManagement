@@ -16,10 +16,19 @@
             </div>
             <div class="card-footer">
                 <a asp-page="Details" asp-route-id="@eventListDto.EventId" class="btn btn-outline-secondary">Details</a>
-                <form asp-page="Apply" asp-antiforgery="true">
-                    <input type="hidden" name="EventId" value="@eventListDto.EventId" />
-                    <button type="submit" class="btn btn-primary">Apply</button>
-                </form>
+                @if(eventListDto.Price.HasValue)
+                {
+                    <button type="button" class="btn btn-primary" data-mdb-toggle="modal" data-mdb-target="#servicesModal">
+                        Ticket Providers
+                    </button>
+                }
+                else
+                {
+                    <form asp-page-handler="Apply" asp-antiforgery="true">
+                        <input type="hidden" name="Id" value="@eventListDto.EventId" />
+                        <button type="submit" class="btn btn-primary">Apply</button>
+                    </form>
+                }
             </div>
         </div>
     </div>

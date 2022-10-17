@@ -1,0 +1,14 @@
+﻿@using EventManagement.WebRazorPages.Pages.Events.Models;
+@model IEnumerable<IntegragionServiceModel>
+
+
+<div class="row">
+    <div class="card">
+        <ul class="list-group list-group-light">
+@foreach (IntegragionServiceModel integragionService in Model)
+{
+    <li class="list-group-item"><a class="btn btn-outline-info" href="@integragionService.WebDomain">@integragionService.CompanyName</a></li>
+}
+</ul>
+    </div>
+</div>

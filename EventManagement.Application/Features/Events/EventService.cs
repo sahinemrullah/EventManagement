@@ -65,11 +65,14 @@ namespace EventManagement.Application.Features.Events
                                             .WithMapSpecification(new EventApplicationStatusSpecification(e => e.Id == eventId))
                                             .FirstOrDefault();
 
+
             if (@event is TicketEvent)
                 return _resultFactory.Failure(new BusinessRuleException("Please select a valid ticket issuer."));
 
             if (@event is null)
                 return _resultFactory.Failure(new NotFoundException(eventId.ToString(), nameof(Event)));
+            
+            _dbContext.Events.Attach(@event);
 
             IResult<User> result = @event.AddUser(userId);
 
