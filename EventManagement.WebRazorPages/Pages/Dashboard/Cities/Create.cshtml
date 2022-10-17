@@ -1,0 +1,39 @@
+﻿@page
+@using EventManagement.WebRazorPages.Extensions;
+@using EventManagement.WebRazorPages.Pages.Cities;
+@model CreateModel
+
+@{
+}
+<div class="row">
+    <div class="col-md-4 mx-auto">
+
+        <div class="card">
+            <div class="card-header text-center">
+                <h3>Create City</h3>
+            </div>
+            <div class="card-body">
+                <form asp-action="Create">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <div class="form-group">
+                        <label asp-for="Name" class="control-label"></label>
+                        <input asp-for="Name" class="form-control" />
+                        <span asp-validation-for="Name" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <input type="submit" value="Create" class="btn btn-primary" />
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{
+        @Html.ShowSwalSuccessMessage(TempData, Url.Page("./Index"))
+        ;
+
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+    }

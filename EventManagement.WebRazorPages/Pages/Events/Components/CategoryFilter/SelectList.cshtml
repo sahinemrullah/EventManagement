@@ -1,0 +1,6 @@
+﻿@using EventManagement.WebRazorPages.Pages.Events.Models;
+@model IEnumerable<CategoryFilterDto>
+
+<select name="CategoryId" asp-items="@new SelectList(Model, nameof(CategoryFilterDto.Id), nameof(CategoryFilterDto.Name))" class="form-select">
+    <option>Please select category.</option>
+</select>

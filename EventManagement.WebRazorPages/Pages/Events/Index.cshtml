@@ -1,0 +1,66 @@
+﻿@page
+@model IndexModel
+@addTagHelper *, EventManagement.WebRazorPages
+@{
+}
+
+<div class="container-fluid mb-3 mt-3">
+
+    <div class="card">
+        <div class="card-header text-center">
+            <h3>Events</h3>
+        </div>
+        <div class="card-body">
+            <form asp-action="Index" id="page_form" method="get">
+                <input asp-for="PageNumber" type="hidden" id="page_number" />
+                <div class="row">
+                    <div class="col-5">
+                        <button class="btn btn-primary btn-grid">Grid View</button>
+                        <button class="btn btn-secondary btn-list">List View</button>
+                    </div>
+                    <div class="col-2">
+                        <select asp-for="PageSize" asp-items="Model.PageSizes" class="form-select mb-1"></select>
+                    </div>
+                    <div class="col-1">
+                        <a class="btn btn-primary" data-value="@Model.PageNumber">List</a>
+                    </div>
+                    <div class="col-2">
+                        <a asp-page="CreateEvent" class="btn btn-primary">New Event</a>
+                    </div>
+                    <div class="col-2">
+                        <a asp-page="CreateTicketEvent" class="btn btn-primary">New Ticket Event</a>
+                    </div>
+                </div>
+            </form>
+
+            <div class="row">
+                <div class="col-2">
+                    <div class="accordion" id="filters">
+                        <div class="accordion-item">
+                            <vc:category-filter selected-categories="@Model.Categories">
+                            </vc:category-filter>
+                        </div>
+                        <div class="accordion-item">
+                            <vc:city-filter selected-cities="@Model.Cities">
+                            </vc:city-filter>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-10">
+                    <div class="container grid-container">
+                        <div class="row">
+                            <vc:paginated-events page-number="@Model.PageNumber"
+                                                 page-size="@Model.PageSize"
+                                                 cities="@Model.Cities"
+                                                 categories="@Model.Categories">
+                            </vc:paginated-events>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@section Styles {
+    <link rel="stylesheet" href="~/css/grid-to-list.css" />
+}

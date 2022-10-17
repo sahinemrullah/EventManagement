@@ -1,0 +1,82 @@
+﻿@page
+@using EventManagement.WebRazorPages.Pages.Models;
+@using EventManagement.WebRazorPages.Pages.Events.Models;
+@using EventManagement.WebRazorPages.Extensions;
+@model EventManagement.WebRazorPages.Pages.Dashboard.UnapprovedEventsModel
+@{
+}
+
+<div class="card">
+    <div class="card-header text-center">
+        <h3>Login</h3>
+    </div>
+    <div class="card-body">
+<table class="table table-striped table-hover">
+    <thead>
+        <tr>
+            <th scope="col" class="text-center">Name</th>
+            <th scope="col" class="text-center">Address</th>
+            <th scope="col" class="text-center">Participant Limit</th>
+            <th scope="col" class="text-center">Start</th>
+            <th scope="col" class="text-center">Application Deadline</th>
+            <th scope="col" class="text-center">Price</th>
+            <th scope="col" class="text-center">Actions</th>
+        </tr>
+        <tr>
+            <form method="get" asp-page="UnapprovedEvents" id="page_form">
+                <td colspan="5"></td>
+            <td colspan="1">
+                <div class="justify-content-end">
+                    <select asp-items="Model.PageSizes" asp-for="PageSize" class="form-select"></select>
+                </div>
+            </td>
+            <td colspan="1">
+                <input asp-for="PageNumber" type="hidden" id="page_number" />
+                <a class="btn btn-primary" data-value="@Model.PaginatedList.CurrentPage">Go</a>
+            </td>
+            </form>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (EventApprovalListDto eventListDto in Model.PaginatedList.Items)
+        {
+            <tr>
+                <td>
+                    @eventListDto.Name
+                </td>
+                <td>
+                    @eventListDto.Address
+                </td>
+                <td>
+                    @eventListDto.ParticipantLimit
+                </td>
+                <td>
+                    @eventListDto.Start
+                </td>
+                <td>
+                    @eventListDto.ApplicationDeadline
+                </td>
+                <td>
+                    @eventListDto.Price
+                </td>
+                <td>
+                    <form asp-page-handler="Approve" asp-antiforgery="true">
+                        <input type="hidden" name="Id" value="@eventListDto.EventId" />
+                        <button type="submit" class="btn btn-primary mb-3">Approve</button>
+                    </form>
+                    <form asp-page-handler="Decline" asp-antiforgery="true">
+                        <input type="hidden" name="Id" value="@eventListDto.EventId" />
+                        <button type="submit" class="btn btn-danger">Decline</button>
+                    </form>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+<partial name="_PaginatedListFooter" model="Model.PaginatedList" />
+</div>
+</div>
+
+@section Scripts {
+    @Html.ShowSwalSuccessMessage(TempData);
+}

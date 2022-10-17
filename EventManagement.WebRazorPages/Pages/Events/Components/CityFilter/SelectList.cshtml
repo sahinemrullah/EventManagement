@@ -1,0 +1,6 @@
+﻿@using EventManagement.WebRazorPages.Pages.Events.Models;
+@model IEnumerable<CityFilterDto>
+
+<select name="CityId" asp-items="@new SelectList(Model, nameof(CityFilterDto.Id), nameof(CityFilterDto.Name))" class="form-select">
+    <option>Please select city.</option>
+</select>

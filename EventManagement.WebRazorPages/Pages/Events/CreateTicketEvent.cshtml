@@ -1,0 +1,83 @@
+﻿@page
+@using EventManagement.WebRazorPages.Extensions;
+@model EventManagement.WebRazorPages.Pages.Events.Validators.CreateTicketEventModel
+@addTagHelper *, EventManagement.WebRazorPages
+@{
+}
+
+<div class="row">
+    <div class="col-6 mx-auto">
+
+        <div class="card">
+            <div class="card-header text-center">
+                <h3>Create Ticket Event</h3>
+            </div>
+            <div class="card-body">
+                <form asp-page="CreateTicketEvent">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <div class="form-group">
+                        <label asp-for="Name" class="control-label"></label>
+                        <input asp-for="Name" class="form-control" />
+                        <span asp-validation-for="Name" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Address" class="control-label"></label>
+                        <input asp-for="Address" class="form-control" />
+                        <span asp-validation-for="Address" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Description" class="control-label"></label>
+                        <input asp-for="Description" class="form-control" />
+                        <span asp-validation-for="Description" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Start" class="control-label"></label>
+                        <input asp-for="Start" class="form-control" />
+                        <span asp-validation-for="Start" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="ApplicationDeadline" class="control-label"></label>
+                        <input asp-for="ApplicationDeadline" class="form-control" />
+                        <span asp-validation-for="ApplicationDeadline" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="ParticipantLimit" class="control-label"></label>
+                        <input asp-for="ParticipantLimit" class="form-control" />
+                        <span asp-validation-for="ParticipantLimit" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="CategoryId" class="control-label"></label>
+                        <vc:category-filter selected-categories="null"
+                                            name="SelectList">
+                        </vc:category-filter>
+                        <span asp-validation-for="CategoryId" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="CityId" class="control-label"></label>
+                        <vc:city-filter selected-cities="null"
+                                        name="SelectList">
+                        </vc:city-filter>
+                        <span asp-validation-for="CityId" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group">
+                        <label asp-for="Price" class="control-label"></label>
+                        <input asp-for="Price" class="form-control" />
+                        <span asp-validation-for="Price" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <input type="submit" value="Create" class="btn btn-primary" />
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+@section Scripts {
+    @{
+        @Html.ShowSwalSuccessMessage(TempData, Url.Page("./Index"))
+        ;
+
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+    }

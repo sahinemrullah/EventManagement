@@ -1,0 +1,28 @@
+﻿@using EventManagement.WebRazorPages.Pages.Models;
+@using EventManagement.WebRazorPages.Pages.Events.Models;
+@model IPaginatedList<EventListDto>
+
+
+@foreach (EventListDto eventListDto in Model.Items)
+{
+    <div class="col-12 col-md-6 col-lg-4">
+        <div class="card">
+            <img class="card-img-top" src="https://picsum.photos/362/180" alt="Card image cap">
+            <div class="card-body">
+                <h5 class="card-title text-center">@eventListDto.Name</h5>
+                <p class="card-text">@eventListDto.Description</p>
+                <p class="card-text text-center">Starts : @eventListDto.Start.ToString("g") <i class="far fa-calendar-alt"></i></p>
+                <p class="card-text text-center">Application Deadline : @eventListDto.ApplicationDeadline.ToString("g") <i class="far fa-calendar-alt"></i></p>
+            </div>
+            <div class="card-footer">
+                <a asp-page="Details" asp-route-id="@eventListDto.EventId" class="btn btn-outline-secondary">Details</a>
+                <form asp-page="Apply" asp-antiforgery="true">
+                    <input type="hidden" name="EventId" value="@eventListDto.EventId" />
+                    <button type="submit" class="btn btn-primary">Apply</button>
+                </form>
+            </div>
+        </div>
+    </div>
+}
+
+<partial name="_PaginatedListFooter" model="Model" />

@@ -1,0 +1,20 @@
+{
+  "version": "1.0",
+  "defaultProvider": "cdnjs",
+  "libraries": [
+    {
+      "provider": "jsdelivr",
+      "library": "sweetalert2@11.5.2",
+      "destination": "wwwroot/lib/sweetalert2/"
+    },
+    {
+      "provider": "jsdelivr",
+      "library": "@sweetalert2/theme-material-ui@5.0.12",
+      "destination": "wwwroot/lib/sweetalert2/theme-material-ui/"
+    },
+    {
+      "library": "mdb-ui-kit@5.0.0",
+      "destination": "wwwroot/lib/mdb-ui-kit/"
+    }
+  ]
+}
