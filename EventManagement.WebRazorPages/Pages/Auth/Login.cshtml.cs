@@ -49,7 +49,7 @@ namespace EventManagement.WebRazorPages.Pages.Auth
                 await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, claimsPrincipal, new AuthenticationProperties() { IsPersistent = RememberMe, AllowRefresh = true });
             }
 
-            return Page();
+            return RedirectToPage("/Index");
         }
     }
 }
