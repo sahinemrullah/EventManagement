@@ -5,7 +5,13 @@
 }
 
 <div class="container-fluid mb-3 mt-3">
-
+    @if(!Model.ModelState.IsValid)
+    {
+        <div class="alert alert-dismissible fade show" role="alert" data-mdb-color="danger">
+            <div asp-validation-summary="All" class="text-danger"></div>
+            <a asp-page="./Index" class="btn-close"></a>
+        </div>
+    }
     <div class="card">
         <div class="card-header text-center">
             <h3>Events</h3>
