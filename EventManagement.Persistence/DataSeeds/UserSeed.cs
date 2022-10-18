@@ -8,6 +8,7 @@ namespace EventManagement.Persistence.DataSeeds
 {
     internal static class UserSeed
     {
+        // Şifreler asdfghjkl1, gwendolin için asdfghjkl2
         public static object[] Objects => new object[] {
             new { Id = 1, FirstName = "Admin", LastName = "Admin", PasswordHash = "$2a$11$LTwig7Q1qvqrGCsBES3YaeUJ4/NPdyUOvgIwVu/TNyfVGuL9DPOHW", Email = "admin@admin.com" },
             new { Id = 2, FirstName = "Gwendolin", LastName = "Connely", PasswordHash = "$2a$11$GZnQc1ePrcdTGa4sSfpsFeZEIjdxMFMPtuSI5UAN89PvFxJrHv9w.", Email = "gwendolyn.connelly@ethereal.email" },

@@ -66,6 +66,11 @@ namespace EventManagement.Persistence
             builder.Entity<Role>().HasData(new { Id = 1, Name = "Admin" });
             builder.Entity<User>().HasData(UserSeed.Objects);
             builder.Entity<UserRole>().HasData(new { UserId = 1, RoleId = 1 });
+            builder.Entity<Event>().HasData(EventSeed.Events);
+            builder.Entity<TicketEvent>().HasData(EventSeed.TicketEvents);
+            builder.Entity<EventParticipant>().HasData(EventParticipantSeed.Objects);
+            // Şifre asdfghjkl1
+            builder.Entity<IntegrationService>().HasData(new { Id = 1, Email = "iss@iss.com", WebDomain = "https://www.google.com.tr/", CompanyName = "Google", PasswordHash = "$2a$11$07EUmoZxDMyAeIamjR8aeui2M.WKzZ7NfgHLQVu.ryB8ZkBn3YABK" });
 
             builder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
         }
