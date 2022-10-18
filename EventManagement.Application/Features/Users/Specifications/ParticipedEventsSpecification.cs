@@ -6,22 +6,22 @@ using Microsoft.EntityFrameworkCore;
 
 namespace EventManagement.Application.Features.Users.Specifications
 {
-    public class ParticipedEventsSpecification : IMapSpecification<Event, ParticipedEventListDto>
+    public class ParticipedEventsSpecification : IMapSpecification<EventParticipant, ParticipedEventListDto>
     {
         public ParticipedEventsSpecification(int userId)
         {
-            Predicate = e => e.UserId == userId && EF.Functions.DateDiffDay(e.Start, DateTime.Now) > 0;
+            Predicate = e => e.UserId == userId && EF.Functions.DateDiffDay(e.Event.Start, DateTime.Now) > 0;
 
             Map = e => new ParticipedEventListDto()
             {
-                Id = e.Id,
-                Start = e.Start,
-                Address = e.Address,
-                Name = e.Name
+                Id = e.Event.Id,
+                Start = e.Event.Start,
+                Address = e.Event.Address,
+                Name = e.Event.Name
             };
         }
-        public Expression<Func<Event, ParticipedEventListDto>> Map { get; }
+        public Expression<Func<EventParticipant, ParticipedEventListDto>> Map { get; }
 
-        public Expression<Func<Event, bool>> Predicate { get; }
+        public Expression<Func<EventParticipant, bool>> Predicate { get; }
     }
 }

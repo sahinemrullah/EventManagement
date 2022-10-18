@@ -24,12 +24,14 @@ namespace EventManagement.Application.Features.Users
         private readonly IUserAccessor _userAccessor;
         private readonly DbSet<UserRole> _roles;
         private readonly DbSet<Event> _events;
+        private readonly DbSet<EventParticipant> _eventParticipant;
         public UsersService(EventManagementDbContext dbContext, IPasswordHasher passwordHasher, IUserAccessor userAccessor, IResultFactory resultFactory) 
             : base(dbContext, passwordHasher, resultFactory)
         {
             _userAccessor = userAccessor;
             _roles = dbContext.Set<UserRole>();
             _events = dbContext.Set<Event>();
+            _eventParticipant = dbContext.Set<EventParticipant>();
         }
 
         public IResult ChangePassword(string password, string newPassword, string newPasswordConfirmation)
@@ -96,7 +98,7 @@ namespace EventManagement.Application.Features.Users
         {
             _userAccessor.User.GetUserId(out int userId);
 
-            IPaginatedList<ParticipedEventListDto> result = _events
+            IPaginatedList<ParticipedEventListDto> result = _eventParticipant
                                                                    .WithMapSpecification(new ParticipedEventsSpecification(userId))
                                                                    .OrderBy(e => e.Id)
                                                                    .ToPaginatedList(pageSize, pageNumber);
@@ -108,7 +110,7 @@ namespace EventManagement.Application.Features.Users
         {
             _userAccessor.User.GetUserId(out int userId);
 
-            IPaginatedList<UpcomingEventListDto> result = _events
+            IPaginatedList<UpcomingEventListDto> result = _eventParticipant
                                                                  .WithMapSpecification(new UpcomingEventsSpecification(userId))
                                                                  .OrderBy(e => e.Id)
                                                                  .ToPaginatedList(pageSize, pageNumber);
