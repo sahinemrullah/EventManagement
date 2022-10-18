@@ -11,33 +11,17 @@
             <div class="card-body">
                 <div class="col-md-4">
                     <form asp-page="Edit">
-                        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-                        <input asp-for="EventDto.EventId" type="hidden" />
+                        <div asp-validation-summary="All" class="text-danger"></div>
+                        <input asp-for="EventEditModel.EventId" type="hidden" />
                         <div class="form-group">
-                            <label asp-for="EventDto.Name" class="control-label"></label>
-                            <input asp-for="EventDto.Name" class="form-control" disabled />
+                            <label asp-for="EventEditModel.Address" class="control-label"></label>
+                            <input asp-for="EventEditModel.Address" class="form-control" />
+                            <span asp-validation-for="EventEditModel.Address" class="text-danger"></span>
                         </div>
                         <div class="form-group">
-                            <label asp-for="EventDto.Address" class="control-label"></label>
-                            <input asp-for="EventDto.Address" class="form-control" />
-                            <span asp-validation-for="EventDto.Address" class="text-danger"></span>
-                        </div>
-                        <div class="form-group">
-                            <label asp-for="EventDto.Description" class="control-label"></label>
-                            <input asp-for="EventDto.Description" class="form-control" disabled />
-                        </div>
-                        <div class="form-group">
-                            <label asp-for="EventDto.Start" class="control-label"></label>
-                            <input asp-for="EventDto.Start" class="form-control" disabled />
-                        </div>
-                        <div class="form-group">
-                            <label asp-for="EventDto.ApplicationDeadline" class="control-label"></label>
-                            <input asp-for="EventDto.ApplicationDeadline" class="form-control" disabled />
-                        </div>
-                        <div class="form-group">
-                            <label asp-for="EventDto.ParticipantLimit" class="control-label"></label>
-                            <input asp-for="EventDto.ParticipantLimit" class="form-control" />
-                            <span asp-validation-for="EventDto.ParticipantLimit" class="text-danger"></span>
+                            <label asp-for="EventEditModel.ParticipantLimit" class="control-label"></label>
+                            <input asp-for="EventEditModel.ParticipantLimit" class="form-control" />
+                            <span asp-validation-for="EventEditModel.ParticipantLimit" class="text-danger"></span>
                         </div>
                         <div class="form-group">
                             <input type="submit" value="Save" class="btn btn-primary" />

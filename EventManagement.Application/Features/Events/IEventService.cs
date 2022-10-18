@@ -19,5 +19,6 @@ namespace EventManagement.Application.Features.Events
         public IResult Delete(int id);
         public IResult<string> Decline(int id);
         public IResult Approve(int id);
+        public IResult<EventEditDto> GetEventForEditById(int id);
     }
 }

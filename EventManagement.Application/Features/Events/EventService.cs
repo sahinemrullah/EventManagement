@@ -207,5 +207,25 @@ namespace EventManagement.Application.Features.Events
 
             return _resultFactory.Success(email);
         }
+
+        public IResult<EventEditDto> GetEventForEditById(int id)
+        {
+            _userAccessor.User.GetUserId(out int userId);
+
+            EventEditDto? editDto = _dbContext.Events
+                                                     .WithMapSpecification(new EventEditSpecification(e => e.Id == id && e.ApprovedForListing))
+                                                     .FirstOrDefault();
+
+            if (editDto == null)
+                return _resultFactory.Failure<EventEditDto>(new NotFoundException(id.ToString(), nameof(Event)));
+
+            if (editDto.UserId != userId)
+                return _resultFactory.Failure<EventEditDto>(new AuthorizationException());
+
+            if ((editDto.Start - DateTime.Now).TotalDays < 5)
+                return _resultFactory.Failure<EventEditDto>(new BusinessRuleException("You can't edit event after 5 days left."));
+
+            return _resultFactory.Success(editDto);
+        }
     }
 }

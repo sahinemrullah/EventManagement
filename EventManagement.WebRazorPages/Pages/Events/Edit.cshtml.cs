@@ -14,20 +14,20 @@ namespace EventManagement.WebRazorPages.Pages.Events
         {
         }
         [BindProperty]
-        public EventDto EventDto { get; set; } = null!;
+        public EventEditModel EventEditModel { get; set; } = null!;
         public async Task<IActionResult> OnGetAsync(int id)
         {
-            return await GetAsync($"api/events/get/{id}", OnGetAsyncHandler);
+            return await GetAsync($"api/events/geteventforedit/{id}", OnGetAsyncHandler);
         }
         private async Task<IActionResult> OnGetAsyncHandler(HttpContent httpContent)
         {
-            EventDto = await httpContent.ReadFromJsonAsync<EventDto>();
+            EventEditModel = await httpContent.ReadFromJsonAsync<EventEditModel>();
             return Page();
         }
 
         public async Task<IActionResult> OnPostAsync()
         {
-            return await PostAsync($"api/events/edit", new { EventDto.EventId, EventDto.Address, EventDto.ParticipantLimit }, OnPostAsyncHandler);
+            return await PostAsync($"api/events/edit", new { EventEditModel.EventId, EventEditModel.Address, EventEditModel.ParticipantLimit }, OnPostAsyncHandler);
         }
 
         public async Task<IActionResult> OnPostAsyncHandler(HttpContent httpContent)

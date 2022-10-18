@@ -152,5 +152,16 @@ namespace EventManagement.WebAPI.Controllers
 
             return Ok();
         }
+
+        [HttpGet("{id}")]
+        public IActionResult GetEventForEdit([FromRoute] int id)
+        {
+            IResult<EventEditDto> result = _eventService.GetEventForEditById(id);
+
+            if (!result.IsSuccess)
+                return result.GetExceptionStatusResult();
+
+            return Ok(result.Value!);
+        }
     }
 }
