@@ -1,6 +1,6 @@
 ﻿namespace EventManagement.WebRazorPages.Pages.Events.Models
 {
-    public class EventDto
+    public class EventModel
     {
         public int EventId { get; set; }
         public string Name { get; set; } = null!;

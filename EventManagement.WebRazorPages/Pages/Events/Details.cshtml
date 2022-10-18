@@ -1,4 +1,5 @@
 ﻿@page
+@using System.Security.Claims
 @model EventManagement.WebRazorPages.Pages.Events.DetailsModel
 @{
 }
@@ -9,62 +10,65 @@
     </div>
     <div class="card-body">
         <div>
-            <h4>@Model.EventDto.Name</h4>
+            <h4>@Model.EventModel.Name</h4>
             <hr />
             <dl class="row">
                 <dt class="col-sm-2">
-                    @Html.DisplayNameFor(model => model.EventDto.EventId)
+                    @Html.DisplayNameFor(model => model.EventModel.EventId)
                 </dt>
                 <dd class="col-sm-10">
-                    @Html.DisplayFor(model => model.EventDto.EventId)
+                    @Html.DisplayFor(model => model.EventModel.EventId)
                 </dd>
                 <dt class="col-sm-2">
-                    @Html.DisplayNameFor(model => model.EventDto.Name)
+                    @Html.DisplayNameFor(model => model.EventModel.Name)
                 </dt>
                 <dd class="col-sm-10">
-                    @Html.DisplayFor(model => model.EventDto.Name)
+                    @Html.DisplayFor(model => model.EventModel.Name)
                 </dd>
                 <dt class="col-sm-2">
-                    @Html.DisplayNameFor(model => model.EventDto.Address)
+                    @Html.DisplayNameFor(model => model.EventModel.Address)
                 </dt>
                 <dd class="col-sm-10">
-                    @Html.DisplayFor(model => model.EventDto.Address)
+                    @Html.DisplayFor(model => model.EventModel.Address)
                 </dd>
                 <dt class="col-sm-2">
-                    @Html.DisplayNameFor(model => model.EventDto.Description)
+                    @Html.DisplayNameFor(model => model.EventModel.Description)
                 </dt>
                 <dd class="col-sm-10">
-                    @Html.DisplayFor(model => model.EventDto.Description)
+                    @Html.DisplayFor(model => model.EventModel.Description)
                 </dd>
                 <dt class="col-sm-2">
-                    @Html.DisplayNameFor(model => model.EventDto.Start)
+                    @Html.DisplayNameFor(model => model.EventModel.Start)
                 </dt>
                 <dd class="col-sm-10">
-                    @Html.DisplayFor(model => model.EventDto.Start)
+                    @Html.DisplayFor(model => model.EventModel.Start)
                 </dd>
                 <dt class="col-sm-2">
-                    @Html.DisplayNameFor(model => model.EventDto.ApplicationDeadline)
+                    @Html.DisplayNameFor(model => model.EventModel.ApplicationDeadline)
                 </dt>
                 <dd class="col-sm-10">
-                    @Html.DisplayFor(model => model.EventDto.ApplicationDeadline)
+                    @Html.DisplayFor(model => model.EventModel.ApplicationDeadline)
                 </dd>
                 <dt class="col-sm-2">
-                    @Html.DisplayNameFor(model => model.EventDto.ParticipantLimit)
+                    @Html.DisplayNameFor(model => model.EventModel.ParticipantLimit)
                 </dt>
                 <dd class="col-sm-10">
-                    @Html.DisplayFor(model => model.EventDto.ParticipantLimit)
+                    @Html.DisplayFor(model => model.EventModel.ParticipantLimit)
                 </dd>
 
                 <dt class="col-sm-2">
-                    @Html.DisplayNameFor(model => model.EventDto.User)
+                    @Html.DisplayNameFor(model => model.EventModel.User)
                 </dt>
                 <dd class="col-sm-10">
-                    @Html.DisplayFor(model => model.EventDto.User)
+                    @Html.DisplayFor(model => model.EventModel.User)
                 </dd>
             </dl>
         </div>
         <div>
-            <a asp-page="Edit" asp-route-id="@Model.EventDto.EventId" class="btn btn-primary">Edit</a>
+            @if(Model.EventModel.UserId == Convert.ToInt32(User.Claims.Where(c => c.Type == ClaimTypes.NameIdentifier).First().Value))
+            {
+                <a asp-page="Edit" asp-route-id="@Model.EventModel.EventId" class="btn btn-primary">Edit</a>
+            }
         </div>
     </div>
 </div>
