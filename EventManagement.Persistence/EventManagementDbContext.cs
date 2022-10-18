@@ -64,7 +64,7 @@ namespace EventManagement.Persistence
             builder.Entity<Category>().HasData(CategorySeed.Objects);
             builder.Entity<City>().HasData(CitySeed.Objects);
             builder.Entity<Role>().HasData(new { Id = 1, Name = "Admin" });
-            builder.Entity<User>().HasData(new { Id = 1, FirstName = "Admin", LastName = "Admin", PasswordHash = "$2a$11$LTwig7Q1qvqrGCsBES3YaeUJ4/NPdyUOvgIwVu/TNyfVGuL9DPOHW", Email = "admin@admin.com" });
+            builder.Entity<User>().HasData(UserSeed.Objects);
             builder.Entity<UserRole>().HasData(new { UserId = 1, RoleId = 1 });
 
             builder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
