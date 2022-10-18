@@ -1,3 +1,4 @@
+using EventManagement.WebRazorPages.Extensions;
 using EventManagement.WebRazorPages.Pages.Shared;
 using EventManagement.WebRazorPages.ServiceConfigurations;
 using Microsoft.AspNetCore.Authorization;
@@ -42,7 +43,7 @@ namespace EventManagement.WebRazorPages.Pages.Events
 
         private async Task<IActionResult> OnPostApplyAsyncHandler(HttpContent httpContent)
         {
-            return RedirectToPage("./Index");
+            return RedirectToPage("/Profile/UpcomingEvents");
         }
     }
 }
