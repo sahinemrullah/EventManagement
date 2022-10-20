@@ -1,6 +1,7 @@
 ﻿@page
 @using EventManagement.WebRazorPages.Pages.Profile.Models
 @using EventManagement.WebRazorPages.Extensions;
+@addTagHelper *, EventManagement.WebRazorPages
 @model EventManagement.WebRazorPages.Pages.Profile.MyOrganizationsModel
 @{
 }
@@ -53,10 +54,10 @@
                         <td class="text-center">
                             @if ((eventListModel.Start - DateTime.Now).TotalDays > 5)
                             {
-                                <form asp-page-handler="Delete" asp-antiforgery="true">
+                                var id = Html.Raw($"submitButton{eventListModel.Id}");
+                                <ajax-form asp-page-handler="Delete" asp-antiforgery="true" type="json" button="@id" button-text="Delete" button-type="danger" center-button="false">
                                     <input type="hidden" name="Id" value="@eventListModel.Id" />
-                                    <button type="submit" class="btn btn-danger">Delete</button>
-                                </form>
+                                </ajax-form>
                             }
                         </td>
                     </tr>
@@ -68,5 +69,7 @@
 <partial name="_PaginatedListFooter" model="Model.PaginatedList" />
 
 @section Scripts {
-    @Html.ShowSwalSuccessMessage(TempData);
+    @{
+        await Html.RenderPartialAsync("_UnobtrusiveAjax");
+    }
 }

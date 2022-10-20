@@ -49,7 +49,11 @@ namespace EventManagement.WebRazorPages.Pages.Shared
             if (!response.IsSuccessStatusCode)
                 return await GetStatusCodeResultAsync(response);
 
+            if (Request.IsAjaxRequest())
+                return new OkObjectResult(new { Message = "Successfully deleted.", RedirectUrl = Url.Page(DeleteRedirectPage) });
+
             TempData.SetSuccessMessage("Successfully deleted.");
+
             return RedirectToPage(DeleteRedirectPage);
         }
 

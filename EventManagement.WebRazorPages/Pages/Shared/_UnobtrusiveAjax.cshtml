@@ -1,25 +1,36 @@
 ﻿<script src="~/lib/jquery-ajax-unobtrusive/jquery.unobtrusive-ajax.js"></script>
 <script type="text/javascript">
-    success = (data) => {
-        var parsed = JSON.parse(data);
-        if (parsed.redirectUrl)
-            fireDialogRedirectOnClose("Success", parsed.message, "success", parsed.redirectUrl);
+    success = (data, status, xhr) => {
+        var resultAsJSON;
+        if (xhr.getResponseHeader("Content-Type").includes("text/html"))
+            resultAsJSON = JSON.parse(data);
+        else
+            resultAsJSON = data;
+
+        if (resultAsJSON.redirectUrl)
+            fireDialogRedirectOnClose("Success", resultAsJSON.message, "success", resultAsJSON.redirectUrl);
         else
             fireDialog("Success", parser.Message, "success");
     };
 
     failure = (xhr) => {
         if (xhr.status === 400) {
-            $('#partialForm').html(xhr.responseText);
-            var form = $("#partialForm").closest("form");
-            form.removeData('validator');
-            form.removeData('unobtrusiveValidation');
-            $.validator.unobtrusive.parse(form);
+            if (xhr.getResponseHeader("Content-Type").includes("text/html")) {
+                $('#partialForm').html(xhr.responseText);
+                var form = $("#partialForm").closest("form");
+                form.removeData('validator');
+                form.removeData('unobtrusiveValidation');
+                $.validator.unobtrusive.parse(form);
+            } else {
+                fireDialog("Something went wrong", "Something went wrong while processing your request please try again.", "error");
+            }
         }
         else if (xhr.status == 401)
             window.location = @Html.Raw($"\"{Url.Page("/Auth/Login")}\"");
         else if (xhr.status == 403)
             window.location = @Html.Raw($"\"{Url.Page("/Auth/Forbidden")}\"");
+        else if (xhr.status == 404)
+            fireDialog("Error", "Requested resource not found.", "error");
         else
             fireDialog("Something went wrong", "Something went wrong while processing your request please try again.", "error");
     };
