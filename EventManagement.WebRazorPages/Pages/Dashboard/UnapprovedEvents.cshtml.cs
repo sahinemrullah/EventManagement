@@ -1,16 +1,12 @@
-using EventManagement.WebRazorPages.Extensions;
 using EventManagement.WebRazorPages.Pages.Events.Models;
-using EventManagement.WebRazorPages.Pages.Models;
 using EventManagement.WebRazorPages.Pages.Shared;
-using EventManagement.WebRazorPages.ServiceConfigurations;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace EventManagement.WebRazorPages.Pages.Dashboard
 {
     public class UnapprovedEventsModel : PaginatedPageModelBase<EventApprovalListDto>
     {
-        public UnapprovedEventsModel(IHttpClientFactory httpClientFactory, IUserAccessor userAccessor) : base(httpClientFactory, userAccessor, "api/events/getunapprovedevents")
+        public UnapprovedEventsModel(IHttpClientFactory httpClientFactory) : base(httpClientFactory, API.Event.GetUnapprovedEvents)
         {
             DeleteRedirectPage = "./UnapprovedEvents";
             PatchRedirectPage = "./UnapprovedEvents";
@@ -18,12 +14,12 @@ namespace EventManagement.WebRazorPages.Pages.Dashboard
 
         public async Task<IActionResult> OnPostApproveAsync([FromForm] int id)
         {
-            return await PatchAsync($"api/events/approveevent/{id}", string.Empty);
+            return await PatchAsync(API.Event.ApproveEvent(id), string.Empty);
         }
 
         public async Task<IActionResult> OnPostDeclineAsync([FromForm] int id)
         {
-            return await DeleteAsync($"api/events/declineevent/{id}");
+            return await DeleteAsync(API.Event.DeclineEvent(id));
         }
     }
 }

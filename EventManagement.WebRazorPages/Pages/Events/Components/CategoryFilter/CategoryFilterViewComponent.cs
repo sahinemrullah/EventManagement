@@ -1,27 +1,23 @@
-﻿using EventManagement.WebRazorPages.Pages.Events.Models;
+﻿using EventManagement.WebRazorPages.Extensions;
+using EventManagement.WebRazorPages.Pages.Events.Models;
+using EventManagement.WebRazorPages.Pages.Shared;
 using Microsoft.AspNetCore.Mvc;
 
 namespace EventManagement.WebRazorPages.Pages.Events.Components.CategoryFilter
 {
     public class CategoryFilterViewComponent : ViewComponent
     {
-        private readonly IHttpClientFactory _httpClientFactory;
+        private readonly HttpClient _client;
         public CategoryFilterViewComponent(IHttpClientFactory httpClientFactory)
         {
-            _httpClientFactory = httpClientFactory;
+            _client = httpClientFactory.GetAPIClient();
         }
 
         public async Task<IViewComponentResult> InvokeAsync(IEnumerable<int> selectedCategories, string? name = null)
         {
             selectedCategories ??= Array.Empty<int>();
 
-            HttpClient client = _httpClientFactory.CreateClient("WebAPI");
-
-            string accessToken = HttpContext.User.FindAll("Access-Token").First().Value;
-
-            client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue($"Bearer", $"{accessToken}");
-
-            List<CategoryFilterDto>? result = await client.GetFromJsonAsync<List<CategoryFilterDto>>("api/category/getall");
+            List<CategoryFilterDto>? result = await _client.GetFromJsonAsync<List<CategoryFilterDto>>(API.Definition.GetAll("category"));
             if (result is not null)
                 result.ForEach(c => c.Selected = selectedCategories.Contains(c.Id));
 

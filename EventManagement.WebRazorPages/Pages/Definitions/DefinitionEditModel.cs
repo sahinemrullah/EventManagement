@@ -1,5 +1,4 @@
 ﻿using EventManagement.WebRazorPages.Pages.Shared;
-using EventManagement.WebRazorPages.ServiceConfigurations;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Text.Json;
@@ -9,10 +8,10 @@ namespace EventManagement.WebRazorPages.Pages.Definitions
     [Authorize(Roles = "Admin")]
     public class DefinitionEditModel : APIClientPageModelBase
     {
-        private readonly string _baseUri;
-        public DefinitionEditModel(IHttpClientFactory httpClientFactory, IUserAccessor userAccessor, string baseUri) : base(httpClientFactory, userAccessor)
+        private readonly string _name;
+        public DefinitionEditModel(IHttpClientFactory httpClientFactory, string name) : base(httpClientFactory)
         {
-            _baseUri = baseUri;
+            _name = name;
         }
         [BindProperty]
         public int Id { get; set; }
@@ -20,7 +19,7 @@ namespace EventManagement.WebRazorPages.Pages.Definitions
         public string Name { get; set; } = null!;
         public async Task<IActionResult> OnGetAsync(int id)
         {
-            return await GetAsync($"{_baseUri}/get/{id}", OnGetAsyncHandler);
+            return await GetAsync(API.Definition.Get(_name, id), OnGetAsyncHandler);
         }
 
         public async Task<IActionResult> OnGetAsyncHandler(HttpContent httpContent)
@@ -37,7 +36,7 @@ namespace EventManagement.WebRazorPages.Pages.Definitions
 
         public async Task<IActionResult> OnPostAsync()
         {
-            return await PutAsync($"{_baseUri}/edit/", new { Id, Name });
+            return await PutAsync(API.Definition.Edit(_name), new { Id, Name });
         }
     }
 }

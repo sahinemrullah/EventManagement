@@ -1,4 +1,4 @@
-﻿namespace EventManagement.WebRazorPages.Pages
+﻿namespace EventManagement.WebRazorPages.Pages.Models
 {
     public class AccessToken
     {

@@ -1,6 +1,5 @@
 using EventManagement.WebRazorPages.Extensions;
 using EventManagement.WebRazorPages.Pages.Shared;
-using EventManagement.WebRazorPages.ServiceConfigurations;
 using FluentValidation;
 using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Authorization;
@@ -13,7 +12,7 @@ namespace EventManagement.WebRazorPages.Pages.Events
     public class CreateEventModel : APIClientPageModelBase
     {
         IValidator<CreateEventModel> _validator;
-        public CreateEventModel(IHttpClientFactory httpClientFactory, IUserAccessor userAccessor, IValidator<CreateEventModel> validator) : base(httpClientFactory, userAccessor)
+        public CreateEventModel(IHttpClientFactory httpClientFactory, IValidator<CreateEventModel> validator) : base(httpClientFactory)
         {
             _validator = validator;
         }
@@ -47,7 +46,7 @@ namespace EventManagement.WebRazorPages.Pages.Events
             if (!result.IsValid)
                 result.AddToModelState(ModelState);
 
-            return await PostAsync($"api/events/createevent", new { Name, Address, Description, Start, ApplicationDeadline, ParticipantLimit, CategoryId, CityId }, OnPostAsyncHandler);
+            return await PostAsync(API.Event.CreateEvent, new { Name, Address, Description, Start, ApplicationDeadline, ParticipantLimit, CategoryId, CityId }, OnPostAsyncHandler);
         }
 
         public async Task<IActionResult> OnPostAsyncHandler(HttpContent httpContent)

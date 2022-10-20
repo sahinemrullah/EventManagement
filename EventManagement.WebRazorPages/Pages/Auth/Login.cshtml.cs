@@ -1,5 +1,5 @@
+using EventManagement.WebRazorPages.Pages.Models;
 using EventManagement.WebRazorPages.Pages.Shared;
-using EventManagement.WebRazorPages.ServiceConfigurations;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Mvc;
@@ -10,7 +10,7 @@ namespace EventManagement.WebRazorPages.Pages.Auth
 {
     public class LoginModel : APIClientPageModelBase
     {
-        public LoginModel(IHttpClientFactory httpClientFactory, IUserAccessor userAccessor) : base(httpClientFactory, userAccessor)
+        public LoginModel(IHttpClientFactory httpClientFactory) : base(httpClientFactory)
         {
         }
 
@@ -26,7 +26,7 @@ namespace EventManagement.WebRazorPages.Pages.Auth
         }
         public async Task<IActionResult> OnPostAsync()
         {
-            return await PostAsync("api/users/login", new { Email, Password }, OnPostAsyncHandler);
+            return await PostAsync(API.User.Login, new { Email, Password }, OnPostAsyncHandler);
         }
 
         public async Task<IActionResult> OnPostAsyncHandler(HttpContent httpContent)
@@ -38,9 +38,9 @@ namespace EventManagement.WebRazorPages.Pages.Auth
                 var handler = new JwtSecurityTokenHandler();
                 var jwtSecurityToken = handler.ReadJwtToken(token);
 
-                ICollection<Claim> claims = jwtSecurityToken.Claims.Select(c => new Claim(c.Type, c.Value)).ToList();
-                claims.Add(new Claim("Access-Token", accessToken.Token));
-                claims.Add(new Claim("Refresh-Token", accessToken.RefreshToken));
+                ICollection<Claim> claims = jwtSecurityToken.Claims.ToList();
+                claims.Add(new Claim(API.AccessTokenKey, accessToken.Token));
+                claims.Add(new Claim(API.RefreshTokenKey, accessToken.RefreshToken));
 
                 ClaimsIdentity claimsIdentity = new(claims, CookieAuthenticationDefaults.AuthenticationScheme);
 

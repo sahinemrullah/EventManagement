@@ -1,5 +1,4 @@
 ﻿using EventManagement.WebRazorPages.Extensions;
-using EventManagement.WebRazorPages.ServiceConfigurations;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
@@ -11,20 +10,16 @@ namespace EventManagement.WebRazorPages.Pages.Shared
     public abstract class APIClientPageModelBase : PageModel
     {
         protected HttpClient HttpClient { get; }
-        private readonly string accessToken = string.Empty;
         protected string DeleteRedirectPage { get; set; }
         protected string PatchRedirectPage { get; set; }
+        protected string PartialViewName { get; set; }
 
-        public APIClientPageModelBase(IHttpClientFactory httpClientFactory, IUserAccessor userAccessor)
+        public APIClientPageModelBase(IHttpClientFactory httpClientFactory)
         {
             DeleteRedirectPage = "./Index";
             PatchRedirectPage = "./Index";
-            HttpClient = httpClientFactory.CreateClient("WebAPI");
-            if(userAccessor.User.Identity is not null && userAccessor.User.Identity.IsAuthenticated)
-            {
-                accessToken = userAccessor.User.FindAll("Access-Token").First().Value;
-                HttpClient.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue($"Bearer", $"{accessToken}");
-            }
+            PartialViewName = string.Empty;
+            HttpClient = httpClientFactory.GetAPIClient();
         }
         protected async Task<IActionResult> GetAsync(string uri, Func<HttpContent, Task<IActionResult>> next)
         {
@@ -120,6 +115,21 @@ namespace EventManagement.WebRazorPages.Pages.Shared
             {
                 TempData.SetFailureMessage($"Something went wrong while processing your request please try again.");
             }
+
+            if (Request.IsAjaxRequest())
+            {
+                if (!Request.IsSupportedAcceptType())
+                    return StatusCode(StatusCodes.Status406NotAcceptable);
+
+                if (Request.AcceptsHtml())
+                {
+                    HttpContext.Response.StatusCode = StatusCodes.Status400BadRequest;
+                    return Partial(PartialViewName);
+                }
+
+                return BadRequest(ModelState);
+            }
+
             return Page();
         }
 

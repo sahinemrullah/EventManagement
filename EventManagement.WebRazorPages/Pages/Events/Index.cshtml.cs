@@ -1,9 +1,6 @@
-using EventManagement.WebRazorPages.Extensions;
 using EventManagement.WebRazorPages.Pages.Shared;
-using EventManagement.WebRazorPages.ServiceConfigurations;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace EventManagement.WebRazorPages.Pages.Events
@@ -13,7 +10,7 @@ namespace EventManagement.WebRazorPages.Pages.Events
     {
         private readonly int[] pageSizes = { 1, 5, 10, 25 };
 
-        public IndexModel(IHttpClientFactory httpClientFactory, IUserAccessor userAccessor) : base(httpClientFactory, userAccessor)
+        public IndexModel(IHttpClientFactory httpClientFactory) : base(httpClientFactory)
         {
         }
 

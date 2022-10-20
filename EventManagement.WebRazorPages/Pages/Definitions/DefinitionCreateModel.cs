@@ -1,17 +1,15 @@
 ﻿using EventManagement.WebRazorPages.Extensions;
 using EventManagement.WebRazorPages.Pages.Shared;
-using EventManagement.WebRazorPages.ServiceConfigurations;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace EventManagement.WebRazorPages.Pages.Definitions
 {
     public abstract class DefinitionCreateModel : APIClientPageModelBase
     {
-        private readonly string _baseUri;
-        protected DefinitionCreateModel(IHttpClientFactory httpClientFactory, IUserAccessor userAccessor, string baseUri) : base(httpClientFactory, userAccessor)
+        private readonly string _name;
+        protected DefinitionCreateModel(IHttpClientFactory httpClientFactory, string name) : base(httpClientFactory)
         {
-            _baseUri = baseUri;
+            _name = name;
         }
 
         [BindProperty]
@@ -22,7 +20,7 @@ namespace EventManagement.WebRazorPages.Pages.Definitions
 
         public async Task<IActionResult> OnPostAsync()
         {
-            return await PostAsync($"{_baseUri}/create", new { Name }, OnPostAsyncHandler);
+            return await PostAsync(API.Definition.Create(_name), new { Name }, OnPostAsyncHandler);
         }
 
         private async Task<IActionResult> OnPostAsyncHandler(HttpContent httpContent)

@@ -1,18 +1,16 @@
 using EventManagement.WebRazorPages.Extensions;
 using EventManagement.WebRazorPages.Pages.Shared;
-using EventManagement.WebRazorPages.ServiceConfigurations;
 using FluentValidation;
 using FluentValidation.AspNetCore;
 using FluentValidation.Results;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace EventManagement.WebRazorPages.Pages.Auth
 {
     public class RegisterModel : APIClientPageModelBase
     {
         IValidator<RegisterModel> _validator;
-        public RegisterModel(IHttpClientFactory httpClientFactory, IUserAccessor userAccessor, IValidator<RegisterModel> validator) : base(httpClientFactory, userAccessor)
+        public RegisterModel(IHttpClientFactory httpClientFactory, IValidator<RegisterModel> validator) : base(httpClientFactory)
         {
             _validator = validator;
         }
@@ -32,13 +30,19 @@ namespace EventManagement.WebRazorPages.Pages.Auth
         public async Task<IActionResult> OnPostAsync()
         {
             ValidationResult result = await _validator.ValidateAsync(this);
+
             if (!result.IsValid)
                 result.AddToModelState(ModelState);
 
-            return await PostAsync("api/users/register", new { Email, Password, LastName, FirstName }, OnPostAsyncHandler);
+            PartialViewName = "RegisterForm";
+
+            return await PostAsync(API.User.Register, new { Email, Password, LastName, FirstName }, OnPostAsyncHandler);
         }
         public async Task<IActionResult> OnPostAsyncHandler(HttpContent httpContent)
         {
+            if(Request.IsAjaxRequest())
+                return new OkObjectResult(new { Message = "Successfully created user.", RedirectUrl = Url.Page("./Login") });
+
             TempData.SetSuccessMessage("Successfully created user.");
 
             return RedirectToPage("./Login");

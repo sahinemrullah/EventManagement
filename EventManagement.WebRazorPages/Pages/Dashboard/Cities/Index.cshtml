@@ -33,7 +33,7 @@
                         </tr>
                     </thead>
                     <tbody id="paginatedListPartial">
-                        @foreach (CityDto dto in Model.Dtos.Items)
+                        @foreach (CityDto dto in Model.Items.Items)
                         {
                             <tr>
                                 <th scope="row" class="text-center">
@@ -59,7 +59,7 @@
                         }
                         <tr>
                             <td colspan="3">
-                                <partial name="_PaginatedListFooter" model="Model.Dtos" />
+                                <partial name="_PaginatedListFooter" model="Model.Items" />
                             </td>
                         </tr>
                     </tbody>

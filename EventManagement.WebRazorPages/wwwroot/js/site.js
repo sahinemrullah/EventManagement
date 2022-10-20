@@ -21,5 +21,25 @@ function gridList(e) {
     $gridCont.removeClass('list-view');
 }
 
+function fireDialog(title, message, type) {
+    swal.fire({
+        title: title,
+        html: `<pre>${message}</pre>`,
+        icon: type
+    });
+}
+
+function fireDialogRedirectOnClose(title, message, type, redirectUrl) {
+    swal.fire({
+        title: title,
+        html: `<pre>${message}</pre>`,
+        icon: type
+    }).then(function () {
+        {
+            window.location = redirectUrl;
+        }
+    });
+}
+
 $(document).on('click', '.btn-grid', gridList);
 $(document).on('click', '.btn-list', showList);

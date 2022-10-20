@@ -2,18 +2,15 @@ using EventManagement.WebRazorPages.Extensions;
 using FluentValidation.AspNetCore;
 using FluentValidation;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.RazorPages;
 using System.ComponentModel.DataAnnotations;
-using System.Xml.Linq;
 using EventManagement.WebRazorPages.Pages.Shared;
-using EventManagement.WebRazorPages.ServiceConfigurations;
 
 namespace EventManagement.WebRazorPages.Pages.Events.Validators
 {
     public class CreateTicketEventModel : APIClientPageModelBase
     {
         IValidator<CreateTicketEventModel> _validator;
-        public CreateTicketEventModel(IHttpClientFactory httpClientFactory, IUserAccessor userAccessor, IValidator<CreateTicketEventModel> validator) : base(httpClientFactory, userAccessor)
+        public CreateTicketEventModel(IHttpClientFactory httpClientFactory, IValidator<CreateTicketEventModel> validator) : base(httpClientFactory)
         {
             _validator = validator;
         }
@@ -49,7 +46,7 @@ namespace EventManagement.WebRazorPages.Pages.Events.Validators
             if (!result.IsValid)
                 result.AddToModelState(ModelState);
 
-            return await PostAsync($"api/events/createticketevent", new { Name, Address, Description, Start, ApplicationDeadline, ParticipantLimit, CategoryId, CityId, Price }, OnPostAsyncHandler);
+            return await PostAsync(API.Event.CreateTicketEvent, new { Name, Address, Description, Start, ApplicationDeadline, ParticipantLimit, CategoryId, CityId, Price }, OnPostAsyncHandler);
         }
 
         public async Task<IActionResult> OnPostAsyncHandler(HttpContent httpContent)

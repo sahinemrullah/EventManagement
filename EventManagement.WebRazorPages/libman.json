@@ -15,6 +15,10 @@
     {
       "library": "mdb-ui-kit@5.0.0",
       "destination": "wwwroot/lib/mdb-ui-kit/"
+    },
+    {
+      "library": "jquery-ajax-unobtrusive@3.2.6",
+      "destination": "wwwroot/lib/jquery-ajax-unobtrusive/"
     }
   ]
 }

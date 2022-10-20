@@ -1,6 +1,4 @@
 ﻿using EventManagement.WebRazorPages.Pages.Models;
-using EventManagement.WebRazorPages.Pages.Profile;
-using EventManagement.WebRazorPages.ServiceConfigurations;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 
@@ -10,7 +8,7 @@ namespace EventManagement.WebRazorPages.Pages.Shared
     {
         private readonly int[] pageSizes = { 1, 5, 10, 25 };
         private readonly string _baseUri;
-        protected PaginatedPageModelBase(IHttpClientFactory httpClientFactory, IUserAccessor userAccessor, string baseUri) : base(httpClientFactory, userAccessor)
+        protected PaginatedPageModelBase(IHttpClientFactory httpClientFactory, string baseUri) : base(httpClientFactory)
         {
             _baseUri = baseUri;
         }

@@ -1,6 +1,5 @@
 using EventManagement.WebRazorPages.Extensions;
 using EventManagement.WebRazorPages.Pages.Shared;
-using EventManagement.WebRazorPages.ServiceConfigurations;
 using FluentValidation;
 using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Authentication;
@@ -15,7 +14,7 @@ namespace EventManagement.WebRazorPages.Pages.Profile
     public class ChangePasswordModel : APIClientPageModelBase
     {
         IValidator<ChangePasswordModel> _validator;
-        public ChangePasswordModel(IHttpClientFactory httpClientFactory, IUserAccessor userAccessor, IValidator<ChangePasswordModel> validator) : base(httpClientFactory, userAccessor)
+        public ChangePasswordModel(IHttpClientFactory httpClientFactory, IValidator<ChangePasswordModel> validator) : base(httpClientFactory)
         {
             _validator = validator;
         }
@@ -39,7 +38,7 @@ namespace EventManagement.WebRazorPages.Pages.Profile
             if (!result.IsValid)
                 result.AddToModelState(ModelState);
 
-            return await PostAsync("api/users/changepassword", new { Password, NewPassword, NewPasswordConfirmation }, OnPostAsyncHandler);
+            return await PostAsync(API.User.ChangePassword, new { Password, NewPassword, NewPasswordConfirmation }, OnPostAsyncHandler);
         }
 
         public async Task<IActionResult> OnPostAsyncHandler(HttpContent httpContent)
