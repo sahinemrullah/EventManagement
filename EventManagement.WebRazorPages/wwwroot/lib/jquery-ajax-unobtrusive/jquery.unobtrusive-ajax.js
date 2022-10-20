@@ -47,7 +47,7 @@
     function disableButton(button) {
         button.prop('disabled', true);
         button.prop('type', "button");
-        button.text(button.attr("data-loading-text"));
+        button.html(`<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> ${button.attr("data-loading-text")}`);
     }
 
     function restoreButton(button) {

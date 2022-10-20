@@ -33,7 +33,7 @@ namespace EventManagement.WebRazorPages.Pages.Shared
         protected async Task<IActionResult> PostAsync<T>(string uri, T value, Func<HttpContent, Task<IActionResult>> next)
         {
             if (!ModelState.IsValid)
-                return Page();
+                return GetModelStateResult();
 
             HttpResponseMessage response = await HttpClient.PostAsJsonAsync(uri, value);
 
@@ -116,6 +116,11 @@ namespace EventManagement.WebRazorPages.Pages.Shared
                 TempData.SetFailureMessage($"Something went wrong while processing your request please try again.");
             }
 
+            return GetModelStateResult();
+        }
+
+        private IActionResult GetModelStateResult()
+        {
             if (Request.IsAjaxRequest())
             {
                 if (!Request.IsSupportedAcceptType())

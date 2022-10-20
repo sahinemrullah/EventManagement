@@ -1,0 +1,26 @@
+﻿<script src="~/lib/jquery-ajax-unobtrusive/jquery.unobtrusive-ajax.js"></script>
+<script type="text/javascript">
+    success = (data) => {
+        var parsed = JSON.parse(data);
+        if (parsed.redirectUrl)
+            fireDialogRedirectOnClose("Success", parsed.message, "success", parsed.redirectUrl);
+        else
+            fireDialog("Success", parser.Message, "success");
+    };
+
+    failure = (xhr) => {
+        if (xhr.status === 400) {
+            $('#partialForm').html(xhr.responseText);
+            var form = $("#partialForm").closest("form");
+            form.removeData('validator');
+            form.removeData('unobtrusiveValidation');
+            $.validator.unobtrusive.parse(form);
+        }
+        else if (xhr.status == 401)
+            window.location = @Html.Raw($"\"{Url.Page("/Auth/Login")}\"");
+        else if (xhr.status == 403)
+            window.location = @Html.Raw($"\"{Url.Page("/Auth/Forbidden")}\"");
+        else
+            fireDialog("Something went wrong", "Something went wrong while processing your request please try again.", "error");
+    };
+</script>

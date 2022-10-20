@@ -11,10 +11,10 @@
             </div>
             <div class="card-body">
                 <form method="post" data-ajax="true" data-ajax-method="post" data-ajax-success="success" data-ajax-dataType="html" data-ajax-failure="failure" data-ajax-button="#submitButton">
-                    <div id="registerForm">
+                    <div id="partialForm">
                         <partial name="RegisterForm" model="Model" />
                     </div>
-                    <div class="form-group">
+                    <div class="form-group text-center mt-3">
                         <button type="submit" class="btn btn-primary" id="submitButton" data-loading-text="Loading..." data-text="Register">
                             Register
                         </button>
@@ -25,26 +25,10 @@
     </div>
 </div>
 
-@section Scripts {
-
+@section Scripts 
+{
     @{
         await Html.RenderPartialAsync("_ValidationScriptsPartial");
+        await Html.RenderPartialAsync("_UnobtrusiveAjax");
     }
-    <script src="~/lib/jquery-ajax-unobtrusive/jquery.unobtrusive-ajax.js"></script>
-    <script type="text/javascript">
-        success = (data) => {
-            var parsed = JSON.parse(data);
-            fireDialogRedirectOnClose("Success", parsed.message, "success", parsed.redirectUrl);
-        };
-        failure = (xhr) => {
-            if (xhr.status === 400)
-                $('#registerForm').html(xhr.responseText);
-            else if (xhr.status == 401)
-                window.location = @Html.Raw($"\"{Url.Page("/Auth/Login")}\"");
-            else if (xhr.status == 403)
-                window.location = @Html.Raw($"\"{Url.Page("/Auth/Forbidden")}\"");
-            else
-                fireDialog("Something went wrong", "Something went wrong while processing your request please try again.", "error");
-        };
-    </script>
 }
