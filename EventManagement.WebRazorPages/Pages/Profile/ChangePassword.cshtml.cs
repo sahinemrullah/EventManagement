@@ -38,13 +38,18 @@ namespace EventManagement.WebRazorPages.Pages.Profile
             if (!result.IsValid)
                 result.AddToModelState(ModelState);
 
+            PartialViewName = "ChangePasswordForm";
+
             return await PostAsync(API.User.ChangePassword, new { Password, NewPassword, NewPasswordConfirmation }, OnPostAsyncHandler);
         }
 
         public async Task<IActionResult> OnPostAsyncHandler(HttpContent httpContent)
         {
-            TempData.SetSuccessMessage("Password successfully changed. Please enter your credentials again.");
             await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
+
+            if (Request.IsAjaxRequest())
+                return new OkObjectResult(new { Message = "Password successfully changed. Please enter your credentials again.", RedirectUrl = Url.Page("/Auth/Login") });
+            
             return Challenge();
         }
     }
