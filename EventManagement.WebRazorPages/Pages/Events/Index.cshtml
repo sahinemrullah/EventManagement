@@ -1,17 +1,8 @@
 ﻿@page
-@model IndexModel
 @addTagHelper *, EventManagement.WebRazorPages
-@{
-}
+@model IndexModel
 
 <div class="container-fluid mb-3 mt-3">
-    @if(!Model.ModelState.IsValid)
-    {
-        <div class="alert alert-dismissible fade show" role="alert" data-mdb-color="danger">
-            <div asp-validation-summary="All" class="text-danger"></div>
-            <a asp-page="./Index" class="btn-close"></a>
-        </div>
-    }
     <div class="card">
         <div class="card-header text-center">
             <h3>Events</h3>
@@ -21,8 +12,8 @@
                 <input asp-for="PageNumber" type="hidden" id="page_number" />
                 <div class="row">
                     <div class="col-5">
-                        <button class="btn btn-primary btn-grid">Grid View</button>
-                        <button class="btn btn-secondary btn-list">List View</button>
+                        <button type="button" class="btn btn-primary btn-grid">Grid View</button>
+                        <button type="button" class="btn btn-secondary btn-list">List View</button>
                     </div>
                     <div class="col-2">
                         <select asp-for="PageSize" asp-items="Model.PageSizes" class="form-select mb-1"></select>
@@ -88,4 +79,14 @@
 </div>
 @section Styles {
     <link rel="stylesheet" href="~/css/grid-to-list.css" />
+}
+@section Scripts {
+    <partial name="_UnobtrusiveAjax" />
+    <script type="text/javascript">
+        $(document).on("click", "form[data-ajax=true] :submit", function (evt) {
+            evt.preventDefault();
+            var form = $($(evt.target).parents("form")[0]);
+            form.submit();
+        });
+    </script>
 }

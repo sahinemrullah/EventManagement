@@ -1,3 +1,4 @@
+using EventManagement.WebRazorPages.Extensions;
 using EventManagement.WebRazorPages.Pages.Shared;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -35,11 +36,14 @@ namespace EventManagement.WebRazorPages.Pages.Events
 
         public async Task<IActionResult> OnPostApplyAsync([FromForm] int id)
         {
-            return await PostAsync($"api/events/apply/{id}", string.Empty, OnPostApplyAsyncHandler);
+            return await PostAsync(API.Event.ApplyEvent(id), string.Empty, OnPostApplyAsyncHandler);
         }
 
         private async Task<IActionResult> OnPostApplyAsyncHandler(HttpContent httpContent)
         {
+            if (Request.IsAjaxRequest())
+                return new OkObjectResult(new { Message = "Successfully applied to event.", RedirectUrl = Url.Page("/Profile/UpcomingEvents") });
+
             return RedirectToPage("/Profile/UpcomingEvents");
         }
     }

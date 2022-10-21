@@ -1,5 +1,6 @@
 ﻿@using EventManagement.WebRazorPages.Pages.Models;
 @using EventManagement.WebRazorPages.Pages.Events.Models;
+@addTagHelper *, EventManagement.WebRazorPages
 @model IPaginatedList<EventListDto>
 
 
@@ -25,10 +26,9 @@
                 }
                 else
                 {
-                    <form asp-page-handler="Apply" asp-antiforgery="true">
+                    <ajax-form asp-page-handler="Apply" asp-antiforgery="true" type="json" button-text="Apply" button-type="primary" center-button="false">
                         <input type="hidden" name="Id" value="@eventListDto.EventId" />
-                        <button type="submit" class="btn btn-primary">Apply</button>
-                    </form>
+                    </ajax-form>
                 }
             </div>
         </div>
