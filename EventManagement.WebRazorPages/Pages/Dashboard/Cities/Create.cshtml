@@ -3,8 +3,6 @@
 @using EventManagement.WebRazorPages.Pages.Cities;
 @model CreateModel
 
-@{
-}
 <div class="row">
     <div class="col-md-4 mx-auto">
 
@@ -34,7 +32,6 @@
 @section Scripts {
     @{
         @Html.ShowSwalSuccessMessage(TempData, Url.Page("./Index"))
-        ;
 
         await Html.RenderPartialAsync("_ValidationScriptsPartial");
     }

@@ -34,7 +34,7 @@ namespace EventManagement.WebRazorPages.Pages.Definitions
             return Page();
         }
 
-        public async Task<IActionResult> OnPostAsync()
+        public async Task<IActionResult> OnPostAsync(int id)
         {
             return await PutAsync(API.Definition.Edit(_name), new { Id, Name });
         }

@@ -1,5 +1,6 @@
 ﻿@page
 @addTagHelper *, EventManagement.WebRazorPages
+@using EventManagement.WebRazorPages.Extensions;
 @model IndexModel
 
 <div class="container-fluid mb-3 mt-3">
@@ -89,4 +90,5 @@
             form.submit();
         });
     </script>
+    @Html.ShowSwalFailureMessage(TempData);
 }

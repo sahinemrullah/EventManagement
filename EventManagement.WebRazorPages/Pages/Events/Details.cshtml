@@ -1,8 +1,7 @@
 ﻿@page
 @using System.Security.Claims
+@using EventManagement.WebRazorPages.Extensions;
 @model EventManagement.WebRazorPages.Pages.Events.DetailsModel
-@{
-}
 
 <div class="card mx-auto">
     <div class="card-header text-center">
@@ -64,11 +63,16 @@
                 </dd>
             </dl>
         </div>
-        <div>
-            @if(Model.EventModel.UserId == Convert.ToInt32(User.Claims.Where(c => c.Type == ClaimTypes.NameIdentifier).First().Value))
-            {
+        @if (((Model.EventModel.Start - DateTime.Now).TotalDays > 5) &&
+        Convert.ToInt32(User.Claims.Where(c => c.Type == ClaimTypes.NameIdentifier).First().Value) == Model.EventModel.UserId)
+        {
+            <div>
                 <a asp-page="Edit" asp-route-id="@Model.EventModel.EventId" class="btn btn-primary">Edit</a>
-            }
-        </div>
+            </div>
+        }
     </div>
 </div>
+
+@section Scripts {
+    @Html.ShowSwalFailureMessage(TempData);
+}

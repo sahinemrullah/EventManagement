@@ -1,5 +1,4 @@
 ﻿@page
-@using EventManagement.WebRazorPages.Extensions;
 @model EventManagement.WebRazorPages.Pages.Auth.LoginModel
 
 <div class="row">
@@ -38,7 +37,6 @@
 </div>
 @section Scripts {
     @{
-        @Html.ShowSwalSuccessMessage(TempData)
         await Html.RenderPartialAsync("_ValidationScriptsPartial");
     }
     }

@@ -33,8 +33,7 @@
 @section Scripts {
     @{
         @Html.ShowSwalSuccessMessage(TempData, Url.Page("./Index"))
-        ;
 
         await Html.RenderPartialAsync("_ValidationScriptsPartial");
     }
-    }
+}

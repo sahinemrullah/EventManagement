@@ -10,7 +10,7 @@
                 <h3>Edit</h3>
             </div>
             <div class="card-body">
-                <form asp-page="Edit" asp-antiforgery="true">
+                <form asp-page="Edit" asp-route-id="@Model.Id" asp-antiforgery="true">
                     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                     <input asp-for="Id" type="hidden" />
                     <div class="form-group">
@@ -32,8 +32,6 @@
 @section Scripts {
     @{
         @Html.ShowSwalSuccessMessage(TempData, Url.Page("./Index"))
-        ;
-
         await Html.RenderPartialAsync("_ValidationScriptsPartial");
     }
-    }
+}
