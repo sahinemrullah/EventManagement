@@ -52,7 +52,7 @@ namespace EventManagement.WebRazorPages.Pages.Events
         public async Task<IActionResult> OnPostAsyncHandler(HttpContent httpContent)
         {
             TempData.SetSuccessMessage("Event successfully created.");
-            return RedirectToPage("./CreateEvent");
+            return Page();
         }
     }
 }

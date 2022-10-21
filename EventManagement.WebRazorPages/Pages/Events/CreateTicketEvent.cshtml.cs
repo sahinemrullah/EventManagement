@@ -52,7 +52,7 @@ namespace EventManagement.WebRazorPages.Pages.Events.Validators
         public async Task<IActionResult> OnPostAsyncHandler(HttpContent httpContent)
         {
             TempData.SetSuccessMessage("Event successfully created.");
-            return RedirectToPage("./CreateTicketEvent");
+            return Page();
         }
     }
 }

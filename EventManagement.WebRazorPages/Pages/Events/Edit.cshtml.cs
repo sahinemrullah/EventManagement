@@ -26,13 +26,13 @@ namespace EventManagement.WebRazorPages.Pages.Events
 
         public async Task<IActionResult> OnPostAsync()
         {
-            return await PostAsync(API.Event.Edit, new { EventEditModel.EventId, EventEditModel.Address, EventEditModel.ParticipantLimit }, OnPostAsyncHandler);
+            return await PostAsync(API.Event.Edit, EventEditModel, OnPostAsyncHandler);
         }
 
         public async Task<IActionResult> OnPostAsyncHandler(HttpContent httpContent)
         {
             TempData.SetSuccessMessage("Successfully edited event.");
-            return RedirectToPage("./Index");
+            return Page();
         }
     }
 }
