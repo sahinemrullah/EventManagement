@@ -94,7 +94,7 @@
 
         loading = $(element.getAttribute("data-ajax-loading"));
         duration = parseInt(element.getAttribute("data-ajax-loading-duration"), 10) || 0;
-        submitButton = $(element.getAttribute("data-ajax-button"));
+        submitButton = $(":submit");
 
         $.extend(options, {
             type: element.getAttribute("data-ajax-method") || undefined,
@@ -198,7 +198,6 @@
         var name = evt.currentTarget.name,
             target = $(evt.target),
             form = $(target.parents("form")[0]);
-
         form.data(data_click, name ? [{ name: name, value: evt.currentTarget.value }] : []);
         form.data(data_target, target);
 

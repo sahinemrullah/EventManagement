@@ -11,7 +11,7 @@
                 <h3>Register</h3>
             </div>
             <div class="card-body">
-                <ajax-form type="html" button="submitButton" button-text="Register" button-type="primary">
+                <ajax-form asp-antiforgery="true" type="html" button-text="Register" button-type="primary">
                     <div id="partialForm">
                         <partial name="RegisterForm" model="Model" />
                     </div>

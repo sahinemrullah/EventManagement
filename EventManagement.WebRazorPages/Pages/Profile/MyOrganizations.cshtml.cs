@@ -8,7 +8,7 @@ namespace EventManagement.WebRazorPages.Pages.Profile
     {
         public MyOrganizationsModel(IHttpClientFactory httpClientFactory) : base(httpClientFactory, API.User.Organizations)
         {
-            DeleteRedirectPage = "./MyOrganizations";
+
         }
 
         public async Task<IActionResult> OnPostDeleteAsync([FromForm] int id)

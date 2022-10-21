@@ -50,6 +50,7 @@ namespace EventManagement.WebRazorPages.Pages.Shared
 
                 return stringBuilder.ToString();
             }
+            public static string ApplyEvent(int id) => $"api/Events/Apply/{id}";
         }
         public static class IntegrationService
         {

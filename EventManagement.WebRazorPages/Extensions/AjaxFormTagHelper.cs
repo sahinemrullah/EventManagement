@@ -8,7 +8,6 @@ namespace EventManagement.WebRazorPages.Extensions
 {
     public class AjaxFormTagHelper : FormTagHelper
     {
-        public string Button { get; set; }
         public string ButtonText { get; set; }
         public string ButtonType { get; set; }
         public bool? CenterButton { get; set; }
@@ -28,8 +27,6 @@ namespace EventManagement.WebRazorPages.Extensions
 
             output.Attributes.SetAttribute("data-ajax-dataType", Type);
 
-            output.Attributes.SetAttribute("data-ajax-button", $"#{Button}");
-
             output.Attributes.SetAttribute("data-ajax-success", "success");
 
             output.Attributes.SetAttribute("data-ajax-failure", "failure");
@@ -40,8 +37,6 @@ namespace EventManagement.WebRazorPages.Extensions
 
 
             TagBuilder submitButton = new("button");
-
-            submitButton.Attributes.Add("id", Button);
 
             submitButton.Attributes.Add("type", "submit");
 

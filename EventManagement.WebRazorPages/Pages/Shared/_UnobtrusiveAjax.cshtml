@@ -21,6 +21,8 @@
                 form.removeData('validator');
                 form.removeData('unobtrusiveValidation');
                 $.validator.unobtrusive.parse(form);
+            } else if (xhr.getResponseHeader("Content-Type").includes("application/json")) {
+                fireDialog("Error", JSON.parse(xhr.responseText)[""][0], "error");
             } else {
                 fireDialog("Something went wrong", "Something went wrong while processing your request please try again.", "error");
             }

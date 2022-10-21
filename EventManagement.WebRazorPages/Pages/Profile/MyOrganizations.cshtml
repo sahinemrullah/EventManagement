@@ -55,7 +55,7 @@
                             @if ((eventListModel.Start - DateTime.Now).TotalDays > 5)
                             {
                                 var id = Html.Raw($"submitButton{eventListModel.Id}");
-                                <ajax-form asp-page-handler="Delete" asp-antiforgery="true" type="json" button="@id" button-text="Delete" button-type="danger" center-button="false">
+                                <ajax-form asp-page-handler="Delete" asp-antiforgery="true" type="json" button-text="Delete" button-type="danger" center-button="false">
                                     <input type="hidden" name="Id" value="@eventListModel.Id" />
                                 </ajax-form>
                             }

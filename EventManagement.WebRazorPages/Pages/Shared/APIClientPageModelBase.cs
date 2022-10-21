@@ -10,14 +10,10 @@ namespace EventManagement.WebRazorPages.Pages.Shared
     public abstract class APIClientPageModelBase : PageModel
     {
         protected HttpClient HttpClient { get; }
-        protected string DeleteRedirectPage { get; set; }
-        protected string PatchRedirectPage { get; set; }
         protected string PartialViewName { get; set; }
 
         public APIClientPageModelBase(IHttpClientFactory httpClientFactory)
         {
-            DeleteRedirectPage = "./Index";
-            PatchRedirectPage = "./Index";
             PartialViewName = string.Empty;
             HttpClient = httpClientFactory.GetAPIClient();
         }
@@ -50,11 +46,11 @@ namespace EventManagement.WebRazorPages.Pages.Shared
                 return await GetStatusCodeResultAsync(response);
 
             if (Request.IsAjaxRequest())
-                return new OkObjectResult(new { Message = "Successfully deleted.", RedirectUrl = Url.Page(DeleteRedirectPage) });
+                return new OkObjectResult(new { Message = "Successfully deleted.", RedirectUrl = PageContext.ActionDescriptor.ViewEnginePath });
 
             TempData.SetSuccessMessage("Successfully deleted.");
 
-            return RedirectToPage(DeleteRedirectPage);
+            return RedirectToPage(PageContext.ActionDescriptor.ViewEnginePath);
         }
 
         protected async Task<IActionResult> PutAsync<T>(string uri, T data)
@@ -67,28 +63,12 @@ namespace EventManagement.WebRazorPages.Pages.Shared
             if (!response.IsSuccessStatusCode)
                 return await GetStatusCodeResultAsync(response);
 
-            TempData.SetSuccessMessage("Successfully updated.");
-
-            return Page();
-        }
-
-        protected async Task<IActionResult> PatchAsync<T>(string uri, T data)
-        {
-            if (!ModelState.IsValid)
-                return Page();
-
-            string jsonData = JsonSerializer.Serialize(data);
-
-            HttpContent content = new StringContent(jsonData);
-
-            HttpResponseMessage response = await HttpClient.PatchAsync(uri, content);
-
-            if (!response.IsSuccessStatusCode)
-                return await GetStatusCodeResultAsync(response);
+            if (Request.IsAjaxRequest())
+                return new OkObjectResult(new { Message = "Successfully updated.", RedirectUrl = PageContext.ActionDescriptor.RelativePath });
 
             TempData.SetSuccessMessage("Successfully updated.");
 
-            return RedirectToPage(PatchRedirectPage);
+            return RedirectToPage(PageContext.ActionDescriptor.ViewEnginePath);
         }
         protected async Task<IActionResult> GetStatusCodeResultAsync(HttpResponseMessage response)
         {
@@ -146,7 +126,7 @@ namespace EventManagement.WebRazorPages.Pages.Shared
         {
             foreach (var (key, errorList) in keyValuePairs)
             {
-                string actualKey = ModelState.Keys
+                string actualKey = key == string.Empty ? key : ModelState.Keys
                                             .Where(k => k.Contains(key, StringComparison.InvariantCultureIgnoreCase))
                                             .FirstOrDefault(string.Empty);
                 foreach (string value in errorList)
