@@ -1,7 +1,11 @@
 ﻿using EventManagement.WebRazorPages.Extensions;
 using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Http.Extensions;
+using Microsoft.AspNetCore.Http.Headers;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.Extensions.Primitives;
 using System.Net;
 using System.Text.Json;
 
@@ -68,7 +72,7 @@ namespace EventManagement.WebRazorPages.Pages.Shared
 
             TempData.SetSuccessMessage("Successfully updated.");
 
-            return RedirectToPage(PageContext.ActionDescriptor.ViewEnginePath);
+            return LocalRedirect(Request.GetEncodedPathAndQuery());
         }
         protected async Task<IActionResult> GetStatusCodeResultAsync(HttpResponseMessage response)
         {
@@ -117,6 +121,32 @@ namespace EventManagement.WebRazorPages.Pages.Shared
                 }
 
                 return BadRequest(ModelState);
+            }
+
+            if (Request.Method == HttpMethods.Get)
+            {
+                TempData.SetFailureMessage(ModelState
+                                                .Values
+                                                    .Where(e => e.ValidationState == ModelValidationState.Invalid)
+                                                .First()
+                                                    .Errors
+                                                .First()
+                                                    .ErrorMessage);
+
+                if(Request.Headers.Referer != StringValues.Empty)
+                {
+                    Uri referer = new(Request.Headers.Referer);
+                    if(referer.Authority == Request.Host.Value)
+                    {
+                        string refererRelativePath = referer.PathAndQuery;
+
+                        return LocalRedirect(refererRelativePath);
+                    }
+
+                    return LocalRedirect("/");
+                }
+
+                return LocalRedirect("/");
             }
 
             return Page();
