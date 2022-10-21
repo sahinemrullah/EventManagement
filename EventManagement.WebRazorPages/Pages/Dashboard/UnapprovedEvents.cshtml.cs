@@ -1,6 +1,8 @@
+using EventManagement.WebRazorPages.Extensions;
 using EventManagement.WebRazorPages.Pages.Events.Models;
 using EventManagement.WebRazorPages.Pages.Shared;
 using Microsoft.AspNetCore.Mvc;
+using System;
 
 namespace EventManagement.WebRazorPages.Pages.Dashboard
 {
@@ -8,13 +10,22 @@ namespace EventManagement.WebRazorPages.Pages.Dashboard
     {
         public UnapprovedEventsModel(IHttpClientFactory httpClientFactory) : base(httpClientFactory, API.Event.GetUnapprovedEvents)
         {
-            DeleteRedirectPage = "./UnapprovedEvents";
-            PatchRedirectPage = "./UnapprovedEvents";
+
         }
 
         public async Task<IActionResult> OnPostApproveAsync([FromForm] int id)
         {
-            return await PatchAsync(API.Event.ApproveEvent(id), string.Empty);
+            HttpResponseMessage response = await HttpClient.PatchAsync(API.Event.ApproveEvent(id), null);
+
+            if (!response.IsSuccessStatusCode)
+                return await GetStatusCodeResultAsync(response);
+
+            if (Request.IsAjaxRequest())
+                return new OkObjectResult(new { Message = "Successfully Approved.", RedirectUrl = Url.Page("./UnapprovedEvents") });
+
+            TempData.SetSuccessMessage("Successfully Approved.");
+
+            return RedirectToPage("./UnapprovedEvents");
         }
 
         public async Task<IActionResult> OnPostDeclineAsync([FromForm] int id)
