@@ -15,7 +15,9 @@ namespace EventManagement.Application.Features.Events.Specifications
             Start = e.Start,
             ApplicationDeadline = e.ApplicationDeadline,
             ParticipantLimit = e.ParticipantLimit,
-            Price = e is TicketEvent ? ((TicketEvent)e).Price : null
+            Price = e is TicketEvent ? ((TicketEvent)e).Price : null,
+            Category = e.Category.Name,
+            City = e.City.Name
         };
 
         public Expression<Func<Event, bool>> Predicate => e => e.ApprovedForListing;

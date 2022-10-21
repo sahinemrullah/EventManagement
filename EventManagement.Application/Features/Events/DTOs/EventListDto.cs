@@ -9,6 +9,8 @@
         public DateTime ApplicationDeadline { get; set; }
         public int ParticipantLimit { get; set; }
         public decimal? Price { get; set; }
+        public string Category { get; set; } = null!;
+        public string City { get; set; } = null!;
     }
     public class TicketEventListDto
     {

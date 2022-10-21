@@ -15,6 +15,10 @@
                 <p class="card-text text-center">Starts : @eventListDto.Start.ToString("g") <i class="far fa-calendar-alt"></i></p>
                 <p class="card-text text-center">Application Deadline : @eventListDto.ApplicationDeadline.ToString("g") <i class="far fa-calendar-alt"></i></p>
                 <p class="card-text text-center">Price : @(eventListDto.Price.HasValue ? $"{eventListDto.Price:##.##$}" : "Free")</p>
+                <p class="card-text text-center">
+                    <span class="badge badge-danger ms-2">@eventListDto.Category</span>
+                    <span class="badge badge-danger ms-2">@eventListDto.City</span>
+                </p>
             </div>
             <div class="card-footer">
                 <a asp-page="Details" asp-route-id="@eventListDto.EventId" class="btn btn-outline-secondary">Details</a>
